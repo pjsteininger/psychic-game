@@ -23,35 +23,40 @@ window.onload = function () {
             console.log(this.cpuLetter);
         },
         runGame: function (keyGuess) {
-            console.log("key: "+keyGuess.key);
-            var guess = keyGuess.which;
-            if (guess == psychicGame.cpuKeyCode) {
-                psychicGame.wins++;
-                $("#wins-s").text(psychicGame.wins);
-                console.log("Wins: " + psychicGame.wins);
-                psychicGame.restartGame();
-            } else {
-                psychicGame.guessesLeft -= 1;
-                if (psychicGame.guessesLeft == 0) {
-                    psychicGame.losses++;
-                    console.log("losses: "+psychicGame.losses)
-                    $("#losses-s").text(psychicGame.losses);
-                    psychicGame.restartGame();
+            if (keyGuess.which >= 65 && keyGuess.which <= 90) {
+                //console.log("key: " + keyGuess.key);
+                var guess = keyGuess.which;
+                if (guess == this.cpuKeyCode) {
+                    this.wins++;
+                    $("#wins-s").text(this.wins);
+                    //console.log("Wins: " + psychicGame.wins);
+                    this.restartGame();
                 } else {
-                    console.log("guesses-left: "+psychicGame.guessesLeft);
-                    $("#guesses-left").text(psychicGame.guessesLeft);
-                    console.log(psychicGame.alphabet.search(keyGuess.key));
-                    psychicGame.guessed.push(psychicGame.alphabet.substring(guess-65, guess-64));
-                    $("#soFar").text(psychicGame.guessed);
+                    this.guessesLeft -= 1;
+                    if (this.guessesLeft == 0) {
+                        this.losses++;
+                        //console.log("losses: " + psychicGame.losses)
+                        $("#losses-s").text(this.losses);
+                        this.restartGame();
+                    } else {
+                        //console.log("guesses-left: " + psychicGame.guessesLeft);
+                        $("#guesses-left").text(this.guessesLeft);
+                        //console.log(psychicGame.alphabet.search(keyGuess.key));
+                        this.guessed.push(this.alphabet.substring(guess - 65, guess - 64));
+                        $("#soFar").text(this.guessed);
+                    }
                 }
             }
         }
     }
 
-psychicGame.initializeGame();
-$(document).on("keyup", psychicGame.runGame);
+    psychicGame.initializeGame();
+    $(document).on("keyup", function(e) {
+        psychicGame.runGame(e);
+    });
 
-    
+
+
 
 
 
